@@ -1,55 +1,57 @@
 [user]
-  name = Son Nguyen
-  email = dev.lamson@gmail.com
+    name = Son Nguyen
+    email = dev.lamson@gmail.com
 
 [pull]
-  rebase = true
+    rebase = true
 
 [branch]
-  autosetuprebase = always
+    autosetuprebase = always
 
 [alias]
-  rh = reset --hard HEAD
-  b = checkout -b
-  co = checkout
-  ca = commit -a --verbose
-  cp = cherry-pick
-  amend = commit -a --amend --no-edit
-  unstage = reset --soft HEAD
-  cdiff = "!git diff $1 $1^"
+    rh = reset --hard HEAD
+    b = checkout -b
+    co = checkout
+    ca = commit -a --verbose
+    cm = commit -m
+    cp = cherry-pick
+    amend = commit -a --amend --no-edit
+    unstage = reset --soft HEAD
+    cdiff = "!git diff $1 $1^"
+    rollback = reset --soft HEAD^
 
 [push]
-  default = current
+    default = current
 
 [core]
-  pager = delta --theme="night-owlish"
-	excludesfile = /Users/kentcdodds/.gitignore_global
+    pager = delta -- --theme="night-owlish"
+    excludesfile = /Users/lamson-dev/.gitignore_global
 
 [interactive]
     diffFilter = delta --color-only
 
 [color]
-	ui = true
+    ui = true
 
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = 11
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
