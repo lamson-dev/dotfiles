@@ -15,7 +15,7 @@
     ca = commit -a --verbose
     cm = commit -m
     cp = cherry-pick
-    amend = commit -a --amend --no-edit
+    amend = commit --amend --no-edit
     unstage = reset --soft HEAD
     cdiff = "!git diff $1 $1^"
     rollback = reset --soft HEAD^
@@ -26,6 +26,7 @@
 [core]
     pager = delta -- --theme="night-owlish"
     excludesfile = /Users/lamson-dev/.gitignore_global
+	ignorecase = false
 
 [interactive]
     diffFilter = delta --color-only
