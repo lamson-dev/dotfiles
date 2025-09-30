@@ -106,6 +106,8 @@ automatically-unhide-macos-hidden-apps = false
     alt-j = 'focus down'
     alt-k = 'focus up'
     alt-l = 'focus right'
+    cmd-backtick = 'focus right'
+    alt-backtick = 'focus left'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#move
     alt-shift-h = 'move left'
@@ -121,13 +123,13 @@ automatically-unhide-macos-hidden-apps = false
     alt-1 = 'workspace 1'
     alt-2 = 'workspace 2'
     alt-3 = 'workspace 3'
-    # alt-4 = 'workspace 4'
-    # alt-5 = 'workspace 5'
+    alt-4 = 'workspace 4' # Built-in Retina Display
+    alt-5 = 'workspace 5' # External Display @ Work
     # alt-6 = 'workspace 6'
-    # alt-7 = 'workspace 7'
+    alt-7 = 'workspace 7'
     # alt-8 = 'workspace 8'
     # alt-9 = 'workspace 9'
-    # alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
+    alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     alt-b = 'workspace B'
     # alt-c = 'workspace C'
     # alt-d = 'workspace D'
@@ -137,12 +139,12 @@ automatically-unhide-macos-hidden-apps = false
     # alt-i = 'workspace I'
     alt-m = 'workspace M'
     alt-n = 'workspace N'
-    # alt-o = 'workspace O'
-    # alt-p = 'workspace P'
+    alt-o = 'workspace O'
+    alt-p = 'workspace P'
     # alt-q = 'workspace Q'
     # alt-r = 'workspace R'
     # alt-s = 'workspace S'
-    alt-t = 'workspace T'
+    alt-t = 'workspace T' # Terminal
     # alt-u = 'workspace U'
     # alt-v = 'workspace V'
     # alt-w = 'workspace W'
@@ -157,10 +159,10 @@ automatically-unhide-macos-hidden-apps = false
     # alt-shift-4 = 'move-node-to-workspace 4'
     # alt-shift-5 = 'move-node-to-workspace 5'
     # alt-shift-6 = 'move-node-to-workspace 6'
-    # alt-shift-7 = 'move-node-to-workspace 7'
+    alt-shift-7 = 'move-node-to-workspace 7'
     # alt-shift-8 = 'move-node-to-workspace 8'
     # alt-shift-9 = 'move-node-to-workspace 9'
-    # alt-shift-a = 'move-node-to-workspace A'
+    alt-shift-a = 'move-node-to-workspace A'
     alt-shift-b = 'move-node-to-workspace B'
     # alt-shift-c = 'move-node-to-workspace C'
     # alt-shift-d = 'move-node-to-workspace D'
@@ -170,8 +172,8 @@ automatically-unhide-macos-hidden-apps = false
     # alt-shift-i = 'move-node-to-workspace I'
     alt-shift-m = 'move-node-to-workspace M'
     alt-shift-n = 'move-node-to-workspace N'
-    # alt-shift-o = 'move-node-to-workspace O'
-    # alt-shift-p = 'move-node-to-workspace P'
+    alt-shift-o = 'move-node-to-workspace O'
+    alt-shift-p = 'move-node-to-workspace P'
     # alt-shift-q = 'move-node-to-workspace Q'
     # alt-shift-r = 'move-node-to-workspace R'
     # alt-shift-s = 'move-node-to-workspace S'
@@ -213,6 +215,18 @@ automatically-unhide-macos-hidden-apps = false
     up = 'volume up'
     shift-down = ['volume set 0', 'mode main']
 
+
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = ['secondary', 'main']
+5 = ['secondary', 'main']
+6 = ['secondary', 'main']
+7 = ['secondary', 'main']
+8 = ['secondary', 'main']
+9 = ['secondary', 'main']
+
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace T'
@@ -228,10 +242,6 @@ run = 'move-node-to-workspace M'
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace M'
-
-[[on-window-detected]]
-if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'notion.id'
