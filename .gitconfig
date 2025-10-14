@@ -25,8 +25,8 @@
 
 [core]
     pager = delta -- --theme="night-owlish"
-    excludesfile = /Users/lamson-dev/.gitignore_global
-	ignorecase = false
+    excludesfile = ~/.gitignore_global
+    ignorecase = false
 
 [interactive]
     diffFilter = delta --color-only
