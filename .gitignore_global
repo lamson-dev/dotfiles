@@ -37,3 +37,13 @@ Session.vim
 
 # eslint
 .eslintcache
+
+# AI Toolings
+
+.specify
+.spectory
+
+.gemini
+GEMINI.md
+
+CLAUDE.md
