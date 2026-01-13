@@ -254,3 +254,9 @@ run = 'move-node-to-workspace N'
 [[on-window-detected]]
 if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout floating",
+]
