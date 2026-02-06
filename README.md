@@ -49,12 +49,22 @@ ln -sf ~/dotfiles/.config/bat ~/.config/bat
 
 Prefix is `Ctrl+Space`. Most bindings use `Alt` (no prefix needed).
 
-Requires [TPM](https://github.com/tmux-plugins/tpm):
+Setup:
 
 ```bash
+# Install TPM
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# Then press: Ctrl+Space, I (capital i) to install plugins
+
+# Start tmux, then install plugins
+tmux
+# Press: Ctrl+Space, Shift+I to install plugins
 ```
+
+Plugins (managed by TPM):
+- `tmux-open` — open URLs/files from copy mode with `o`
+- `tmux-resurrect` — save/restore sessions (`Ctrl+Space, Ctrl+s` / `Ctrl+Space, Ctrl+r`)
+- `tmux-continuum` — auto-saves sessions every 15 min
+- `tmux-prefix-highlight` — status bar flashes when prefix is pressed
 
 ## Ghostty
 

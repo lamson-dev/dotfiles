@@ -27,7 +27,7 @@ All configs live in `~/dotfiles/` and are symlinked to their expected locations.
 ## Key Details
 
 - **Tmux prefix**: `Ctrl+Space` (not the default `Ctrl+B`)
-- **Tmux plugins**: Managed by TPM (`~/.tmux/plugins/tpm`)
+- **Tmux plugins**: Managed by TPM (`~/.tmux/plugins/tpm`). After symlinking the config, install TPM with `git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`, then open tmux and press `Ctrl+Space, Shift+I` to install plugins
 - **Ghostty**: Must have `macos-option-as-alt = true` for tmux Alt keybindings
 - **Git pager**: Uses `delta` with `night-owlish` theme
 - **Prompt**: Starship
