@@ -131,7 +131,7 @@ automatically-unhide-macos-hidden-apps = false
     # alt-9 = 'workspace 9'
     alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
     alt-b = 'workspace B'
-    # alt-c = 'workspace C'
+    alt-c = 'workspace C'
     # alt-d = 'workspace D'
     # alt-e = 'workspace E'
     # alt-f = 'workspace F'
@@ -164,7 +164,7 @@ automatically-unhide-macos-hidden-apps = false
     # alt-shift-9 = 'move-node-to-workspace 9'
     alt-shift-a = 'move-node-to-workspace A'
     alt-shift-b = 'move-node-to-workspace B'
-    # alt-shift-c = 'move-node-to-workspace C'
+    alt-shift-c = 'move-node-to-workspace C'
     # alt-shift-d = 'move-node-to-workspace D'
     # alt-shift-e = 'move-node-to-workspace E'
     # alt-shift-f = 'move-node-to-workspace F'
@@ -237,7 +237,7 @@ run = ['move-node-to-workspace T']
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace B'
+run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
@@ -259,9 +259,19 @@ run = 'move-node-to-workspace N'
 if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace 4'
 
+# Cursor
 [[on-window-detected]]
 if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace 1'
+run = 'move-node-to-workspace C'
+
+# Antigravity
+[[on-window-detected]]
+if.app-id = 'com.google.antigravity'
+run = 'move-node-to-workspace A'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace I'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
