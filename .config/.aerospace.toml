@@ -229,7 +229,7 @@ automatically-unhide-macos-hidden-apps = false
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = ['move-node-to-workspace 3']
+run = ['move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
@@ -262,7 +262,7 @@ run = 'move-node-to-workspace 4'
 # Cursor
 [[on-window-detected]]
 if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace C'
+run = 'move-node-to-workspace 3'
 
 # Antigravity
 [[on-window-detected]]
