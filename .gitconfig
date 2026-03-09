@@ -27,6 +27,7 @@
     pager = delta -- --theme="night-owlish"
     excludesfile = ~/.gitignore_global
     ignorecase = false
+	editor = vim
 
 [interactive]
     diffFilter = delta --color-only
