@@ -21,6 +21,10 @@ All configs live in `~/dotfiles/` and are symlinked to their expected locations.
 | `.zprofile` | `~/.zprofile` |
 | `.npmrc` | `~/.npmrc` |
 
+## File Associations
+
+`duti/config` maps code file extensions to Cursor (`com.todesktop.230313mzl4w4u92`). Applied automatically by `setup-dev.sh`. To re-apply manually: `duti ~/dotfiles/duti/config`. Swift/Xcode project files intentionally excluded.
+
 ## Adding New Configs
 
 1. Create the config file under `~/dotfiles/` in a sensible directory

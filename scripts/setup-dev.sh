@@ -18,6 +18,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
 echo "Installing CLI tools..."
 brew install \
   bat \
+  duti \
   git-delta \
   nvm \
   starship \
@@ -152,5 +153,11 @@ if [ ! -d "$HOME/google-cloud-sdk" ]; then
   echo "Installing Google Cloud SDK..."
   curl -fsSL https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir="$HOME"
 fi
+
+###############################################################################
+# File associations — Cursor as default for code files
+###############################################################################
+echo "Setting Cursor as default for code files..."
+duti "$DOTFILES/duti/config"
 
 echo "Dev tooling setup complete."
