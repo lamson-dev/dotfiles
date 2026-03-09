@@ -24,10 +24,6 @@ Session.vim
 # localhistory
 .history
 
-# PayPal project specific stuff
-.nvmrc
-.agignore
-
 # Over-arching stuff
 *.ignore/
 *.ignore.*
@@ -52,7 +48,7 @@ GEMINI.md
 .cursorindexingignore
 
 # Configs with credentials
-.zprofile
+.zprofile.local
 .npmrc
 
 .env

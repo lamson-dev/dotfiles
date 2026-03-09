@@ -23,6 +23,7 @@ brew install \
   starship \
   tree \
   vim \
+  zellij \
   zsh
 
 ###############################################################################
@@ -113,6 +114,12 @@ link "$DOTFILES/.gitignore_global"         "$HOME/.gitignore_global"
 link "$DOTFILES/.zshrc"                    "$HOME/.zshrc"
 link "$DOTFILES/.zprofile"                 "$HOME/.zprofile"
 link "$DOTFILES/.npmrc"                    "$HOME/.npmrc"
+
+# Copy machine-local secrets template if it doesn't exist
+if [ ! -f "$HOME/.zprofile.local" ]; then
+  cp "$DOTFILES/.zprofile.local.example" "$HOME/.zprofile.local"
+  echo "  Created ~/.zprofile.local from template — fill in your secrets"
+fi
 link "$DOTFILES/.config/starship.toml"     "$HOME/.config/starship.toml"
 link "$DOTFILES/.config/.aerospace.toml"   "$HOME/.config/.aerospace.toml"
 link "$DOTFILES/tmux/tmux.conf"            "$HOME/.tmux.conf"

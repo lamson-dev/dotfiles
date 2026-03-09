@@ -1,0 +1,18 @@
+# Machine-local secrets and project-specific config
+# Copy to ~/.zprofile.local and fill in values
+# NEVER commit this file to git
+
+# API keys / tokens
+export NPM_TOKEN=
+export GOOGLE_GENAI_API_KEY=
+export GEMINI_API_KEY=
+
+# GCP project config
+export FV__GCP_PROJECT=
+export FV__GCP_STORAGEBUCKET=
+export FIREBASE_CONFIG=
+
+# gcloud project shortcuts
+# alias gfvSon="gcloud config set project finvari-son"
+# alias gfvSonOnboarding="gcloud config set project finvari-son-onboarding"
+# alias gfvPentestOnboarding="gcloud config set project finvari-pentest-onboarding"

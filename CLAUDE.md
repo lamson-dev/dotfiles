@@ -17,6 +17,9 @@ All configs live in `~/dotfiles/` and are symlinked to their expected locations.
 | `.config/starship.toml` | `~/.config/starship.toml` |
 | `.config/.aerospace.toml` | `~/.config/.aerospace.toml` |
 | `.config/bat/` | `~/.config/bat/` |
+| `.zshrc` | `~/.zshrc` |
+| `.zprofile` | `~/.zprofile` |
+| `.npmrc` | `~/.npmrc` |
 
 ## Adding New Configs
 
