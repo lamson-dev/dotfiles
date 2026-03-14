@@ -2,112 +2,147 @@
 set -euo pipefail
 
 ###############################################################################
-# setup-admin.sh — Machine-level setup (run once per Mac, requires sudo)
+# setup-admin.sh — Machine setup & user provisioning (requires sudo)
 #
-# Run as an admin user:
-#   sudo bash scripts/setup-admin.sh [USERNAME]
+# Full machine setup (run once on a new Mac):
+#   bash scripts/setup-admin.sh
 #
-# What it does:
-#   1. Installs Xcode CLI tools
-#   2. Installs Homebrew
-#   3. Installs CLI tools, cask apps, and fonts via Homebrew
-#   4. Adds Homebrew zsh to /etc/shells
-#   5. Sets default shell for the target user
+# Add a user to an already-setup machine:
+#   bash scripts/setup-admin.sh --user USERNAME
 #
 # Idempotent — safe to run multiple times.
 ###############################################################################
 
-TARGET_USER="${1:-$USER}"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DOTFILES="$(dirname "$SCRIPT_DIR")"
 
-if [ "$(id -u)" -ne 0 ] && ! sudo -v 2>/dev/null; then
-  echo "ERROR: This script requires sudo. Run as admin or with sudo."
+# Parse arguments
+ADD_USER_ONLY=false
+TARGET_USER=""
+if [ "${1:-}" = "--user" ]; then
+  ADD_USER_ONLY=true
+  TARGET_USER="${2:-}"
+  if [ -z "$TARGET_USER" ]; then
+    echo "Usage: bash scripts/setup-admin.sh --user USERNAME"
+    exit 1
+  fi
+fi
+
+if ! sudo -v 2>/dev/null; then
+  echo "ERROR: This script requires sudo. Run as admin."
   exit 1
 fi
 
-echo "Setting up machine for user: $TARGET_USER"
-echo ""
-
 # Keep sudo alive
-sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
-# Xcode Command Line Tools
+# Machine setup (skipped with --user)
 ###############################################################################
-if ! xcode-select -p &>/dev/null; then
-  echo "Installing Xcode Command Line Tools..."
-  xcode-select --install
-  echo "Waiting for Xcode CLI tools to finish installing..."
-  until xcode-select -p &>/dev/null; do
-    sleep 5
-  done
+if [ "$ADD_USER_ONLY" = false ]; then
+  echo "==> Setting up this Mac..."
+  echo ""
+
+  # Xcode Command Line Tools
+  if ! xcode-select -p &>/dev/null; then
+    echo "Installing Xcode Command Line Tools..."
+    xcode-select --install
+    echo "Waiting for Xcode CLI tools to finish installing..."
+    until xcode-select -p &>/dev/null; do
+      sleep 5
+    done
+  fi
+  echo "Xcode CLI tools: OK"
+
+  # Homebrew
+  if ! command -v brew &>/dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
+  echo "Homebrew: OK"
+
+  # CLI tools
+  echo "Installing CLI tools..."
+  brew install \
+    bat \
+    duti \
+    git \
+    git-delta \
+    nvm \
+    starship \
+    tree \
+    vim \
+    zellij \
+    zsh
+
+  # Cask apps
+  echo "Installing apps..."
+  brew install --cask \
+    1password \
+    cursor \
+    dropbox \
+    firefox \
+    ghostty \
+    google-chrome \
+    nikitabobko/tap/aerospace \
+    slack \
+    spotify \
+    zoom
+
+  # Fonts
+  echo "Installing fonts..."
+  brew install --cask font-fira-code
+
+  # Add Homebrew zsh to allowed shells
+  ZSH_PATH="/opt/homebrew/bin/zsh"
+  if ! grep -q "$ZSH_PATH" /etc/shells; then
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells
+  fi
+
+  # Fix permissions for shared Homebrew usage
+  echo "Fixing Homebrew permissions..."
+  sudo chmod -R go-w /opt/homebrew/share
+
+  echo ""
+  echo "Machine setup complete!"
+
+  # Set up the admin's own account
+  TARGET_USER="$USER"
 fi
-echo "Xcode CLI tools: OK"
 
 ###############################################################################
-# Homebrew
+# User provisioning
 ###############################################################################
-if ! command -v brew &>/dev/null; then
-  echo "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo ""
+echo "==> Setting up user: $TARGET_USER"
+
+# Verify user exists
+if ! id "$TARGET_USER" &>/dev/null; then
+  echo "ERROR: User '$TARGET_USER' does not exist on this machine."
+  exit 1
 fi
-eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
-echo "Homebrew: OK"
 
-###############################################################################
-# Fix Homebrew permissions for target user
-###############################################################################
-echo "Fixing Homebrew permissions for $TARGET_USER..."
-sudo chown -R "$TARGET_USER" /opt/homebrew
-
-###############################################################################
-# CLI tools
-###############################################################################
-echo "Installing CLI tools..."
-brew install \
-  bat \
-  duti \
-  git \
-  git-delta \
-  nvm \
-  starship \
-  tree \
-  vim \
-  zellij \
-  zsh
-
-###############################################################################
-# Cask apps
-###############################################################################
-echo "Installing apps..."
-brew install --cask \
-  1password \
-  cursor \
-  dropbox \
-  firefox \
-  ghostty \
-  google-chrome \
-  nikitabobko/tap/aerospace \
-  slack \
-  spotify \
-  zoom
-
-###############################################################################
-# Fonts
-###############################################################################
-echo "Installing fonts..."
-brew install --cask font-fira-code
-
-###############################################################################
-# Shell — add Homebrew zsh to allowed shells and set for target user
-###############################################################################
+# Set default shell
 ZSH_PATH="/opt/homebrew/bin/zsh"
-if ! grep -q "$ZSH_PATH" /etc/shells; then
-  echo "$ZSH_PATH" | sudo tee -a /etc/shells
+CURRENT_SHELL=$(dscl . -read "/Users/$TARGET_USER" UserShell 2>/dev/null | awk '{print $2}')
+if [ "$CURRENT_SHELL" != "$ZSH_PATH" ]; then
+  sudo chsh -s "$ZSH_PATH" "$TARGET_USER"
+  echo "Shell: set to $ZSH_PATH"
+else
+  echo "Shell: already $ZSH_PATH"
 fi
-sudo chsh -s "$ZSH_PATH" "$TARGET_USER"
-echo "Default shell set to $ZSH_PATH for $TARGET_USER"
+
+# Grant Homebrew access
+sudo dseditgroup -o edit -a "$TARGET_USER" -t user admin 2>/dev/null || true
+
+# Run user setup as target user
+echo ""
+echo "Running user setup as $TARGET_USER..."
+sudo -u "$TARGET_USER" -i bash -c "
+  cd ~/dotfiles 2>/dev/null || git clone https://github.com/lamson-dev/dotfiles.git ~/dotfiles
+  cd ~/dotfiles && bash scripts/setup-user.sh
+"
 
 echo ""
-echo "Admin setup complete! Now have $TARGET_USER run:"
-echo "  cd ~/dotfiles && bash scripts/setup-user.sh"
+echo "Done! $TARGET_USER is ready to go."

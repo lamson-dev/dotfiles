@@ -49,12 +49,8 @@ export DOTFILES
 
 if sudo -v 2>/dev/null; then
   echo ""
-  echo "==> Running admin setup (machine-level)..."
-  bash "$DOTFILES/scripts/setup-admin.sh" "$USER"
-
-  echo ""
-  echo "==> Running user setup..."
-  bash "$DOTFILES/scripts/setup-user.sh"
+  echo "==> Running admin setup (machine + current user)..."
+  bash "$DOTFILES/scripts/setup-admin.sh"
 else
   echo ""
   echo "No sudo access — running user setup only."
