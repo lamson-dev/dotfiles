@@ -4,14 +4,16 @@ set -euo pipefail
 ###############################################################################
 # .macos — Bootstrap a fresh Mac
 #
-# Run with:
+# For a new machine (admin):
 #   curl -fsSL https://raw.githubusercontent.com/lamson-dev/dotfiles/master/.macos | bash
 #
-# What it does:
-#   1. Installs Xcode CLI tools & Homebrew (prerequisites)
-#   2. Clones this dotfiles repo to ~/dotfiles
-#   3. Runs scripts/setup-dev.sh      (apps, shell, symlinks)
-#   4. Runs scripts/setup-macos-defaults.sh  (macOS system preferences)
+# For a new user on an already-setup machine:
+#   cd ~/dotfiles && bash scripts/setup-user.sh
+#
+# Scripts:
+#   scripts/setup-admin.sh  — Xcode, Homebrew, apps, fonts (requires sudo)
+#   scripts/setup-user.sh   — dotfiles, shell config, defaults (no sudo)
+#   scripts/setup-macos-defaults.sh — macOS preferences (no sudo)
 #
 # Idempotent — safe to run multiple times.
 ###############################################################################
@@ -22,67 +24,41 @@ REPO="https://github.com/lamson-dev/dotfiles.git"
 echo "Hello $(whoami)! Let's get you set up."
 echo ""
 
-# Ask for the administrator password upfront
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
 ###############################################################################
-# Phase 1: Prerequisites (needed before we can clone)
+# Clone dotfiles (needed before we can run scripts)
 ###############################################################################
-echo "==> Phase 1: Prerequisites"
-
-# Xcode Command Line Tools
-if ! xcode-select -p &>/dev/null; then
-  echo "Installing Xcode Command Line Tools..."
-  xcode-select --install
-  echo "Waiting for Xcode CLI tools to finish installing..."
-  until xcode-select -p &>/dev/null; do
-    sleep 5
-  done
-  echo "Xcode CLI tools installed."
-fi
-
-# Homebrew
-if ! command -v brew &>/dev/null; then
-  echo "Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-# git comes with Xcode CLI tools, but ensure it's available
-if ! command -v git &>/dev/null; then
-  brew install git
-fi
-
-###############################################################################
-# Phase 2: Clone dotfiles
-###############################################################################
-echo ""
-echo "==> Phase 2: Cloning dotfiles"
-
 if [ -d "$DOTFILES" ]; then
   echo "Dotfiles already exist at $DOTFILES, pulling latest..."
+  git -C "$DOTFILES" stash --quiet 2>/dev/null || true
   git -C "$DOTFILES" pull --rebase
+  git -C "$DOTFILES" stash pop --quiet 2>/dev/null || true
 else
+  # Ensure git is available (comes with Xcode CLI tools)
+  if ! command -v git &>/dev/null; then
+    echo "ERROR: git not found. Install Xcode CLI tools first: xcode-select --install"
+    exit 1
+  fi
   echo "Cloning dotfiles to $DOTFILES..."
   git clone "$REPO" "$DOTFILES"
 fi
 
 ###############################################################################
-# Phase 3: Hand off to repo scripts
+# Run the appropriate scripts
 ###############################################################################
-echo ""
-echo "==> Phase 3: Dev tooling"
 export DOTFILES
-bash "$DOTFILES/scripts/setup-dev.sh"
 
-echo ""
-echo "==> Phase 4: macOS defaults"
-bash "$DOTFILES/scripts/setup-macos-defaults.sh"
+if sudo -v 2>/dev/null; then
+  echo ""
+  echo "==> Running admin setup (machine-level)..."
+  bash "$DOTFILES/scripts/setup-admin.sh" "$USER"
 
-echo ""
-echo "All done! A few manual steps remain:"
-echo "  1. Restart your terminal (or run: source ~/.zshrc)"
-echo "  2. Open tmux and press Ctrl+Space, Shift+I to install tmux plugins"
-echo "  3. Fill in secrets in ~/.zprofile.local"
-echo "  4. Log into apps: 1Password, Chrome, Slack, Spotify, etc."
+  echo ""
+  echo "==> Running user setup..."
+  bash "$DOTFILES/scripts/setup-user.sh"
+else
+  echo ""
+  echo "No sudo access — running user setup only."
+  echo "(If apps/Homebrew aren't installed, ask an admin to run: sudo bash scripts/setup-admin.sh $USER)"
+  echo ""
+  bash "$DOTFILES/scripts/setup-user.sh"
+fi
