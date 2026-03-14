@@ -1,6 +1,12 @@
-[user]
-    name = Son Nguyen
-    email = dev.lamson@gmail.com
+# User identity — auto-detected by home directory
+[includeIf "gitdir:/Users/dalab-yolo/"]
+	path = ~/dotfiles/.gitconfig.user.dalab-yolo
+[includeIf "gitdir:/Users/dalab-tech/"]
+	path = ~/dotfiles/.gitconfig.user.dalab-tech
+[includeIf "gitdir:/Users/lamson-dev/"]
+	path = ~/dotfiles/.gitconfig.user.lamson-dev
+[includeIf "gitdir:/Users/dalab-anton/"]
+	path = ~/dotfiles/.gitconfig.user.dalab-anton
 
 [pull]
     rebase = true
