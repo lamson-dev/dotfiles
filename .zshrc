@@ -2,7 +2,7 @@
 # OpenSpec shell completions configuration
 fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
 autoload -Uz compinit
-compinit
+compinit -u
 # OPENSPEC:END
 
 # Path to your oh-my-zsh installation.
