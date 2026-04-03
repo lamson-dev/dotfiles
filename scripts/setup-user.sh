@@ -163,6 +163,8 @@ echo "==> Bun"
 if ! command -v bun &>/dev/null; then
   echo "Installing Bun..."
   curl -fsSL https://bun.sh/install | bash
+  # Bun installer appends to .zshrc — restore since our tracked .zshrc already has bun config
+  git -C "$DOTFILES" checkout -- .zshrc 2>/dev/null || true
 else
   echo "Bun: already installed ($(bun --version 2>/dev/null || echo 'unknown'))"
 fi
