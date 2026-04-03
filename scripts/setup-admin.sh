@@ -71,6 +71,7 @@ if [ "$ADD_USER_ONLY" = false ]; then
     git \
     git-delta \
     nvm \
+    pnpm \
     starship \
     tree \
     vim \
