@@ -91,6 +91,7 @@ if [ "$ADD_USER_ONLY" = false ]; then
     nikitabobko/tap/aerospace \
     slack \
     spotify \
+    tailscale \
     zoom
 
   # Fonts
