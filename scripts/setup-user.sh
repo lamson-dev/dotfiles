@@ -75,11 +75,11 @@ if [ ! -s "$(brew --prefix nvm)/nvm.sh" ]; then
 else
   # shellcheck disable=SC1091
   . "$(brew --prefix nvm)/nvm.sh"
-  if ! command -v node &>/dev/null; then
+  if ! nvm current | grep -q '^v'; then
     echo "Installing latest LTS Node..."
     nvm install --lts
   else
-    echo "Node: already installed ($(node --version))"
+    echo "Node: already installed ($(nvm current))"
   fi
 fi
 
