@@ -67,6 +67,7 @@ if [ "$ADD_USER_ONLY" = false ]; then
   brew install \
     bat \
     duti \
+    gh \
     git \
     git-delta \
     nvm \
@@ -101,8 +102,11 @@ if [ "$ADD_USER_ONLY" = false ]; then
   fi
 
   # Fix permissions for shared Homebrew usage
+  # Remove group/other write (Homebrew security), but ensure read+execute
+  # so non-admin users can access zsh functions, completions, etc.
   echo "Fixing Homebrew permissions..."
   sudo chmod -R go-w /opt/homebrew/share
+  sudo chmod -R o+rX /opt/homebrew/share/zsh
 
   echo ""
   echo "Machine setup complete!"
