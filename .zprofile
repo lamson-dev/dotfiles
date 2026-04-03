@@ -8,6 +8,9 @@ fi
 # openjdk (if installed via Homebrew)
 [ -d "$HOMEBREW_PREFIX/opt/openjdk/bin" ] && export PATH="$HOMEBREW_PREFIX/opt/openjdk/bin:$PATH"
 
+# Claude Code CLI
+[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+
 export EDITOR=cursor
 
 # Source machine-local overrides (secrets, project-specific config)
