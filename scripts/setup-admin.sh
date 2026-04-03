@@ -140,8 +140,8 @@ sudo dseditgroup -o edit -a "$TARGET_USER" -t user admin 2>/dev/null || true
 echo ""
 echo "Running user setup as $TARGET_USER..."
 sudo -u "$TARGET_USER" -i bash -c "
-  cd ~/dotfiles 2>/dev/null || git clone https://github.com/lamson-dev/dotfiles.git ~/dotfiles
-  cd ~/dotfiles && bash scripts/setup-user.sh
+  cd \$HOME/dotfiles 2>/dev/null || git clone https://github.com/lamson-dev/dotfiles.git \$HOME/dotfiles
+  cd \$HOME/dotfiles && bash scripts/setup-user.sh
 "
 
 echo ""
