@@ -106,7 +106,8 @@ if [ "$ADD_USER_ONLY" = false ]; then
   # so non-admin users can access zsh functions, completions, etc.
   echo "Fixing Homebrew permissions..."
   sudo chmod -R go-w /opt/homebrew/share
-  sudo chmod -R o+rX /opt/homebrew/share/zsh
+  sudo chmod -R o+rX /opt/homebrew/share
+  sudo chmod -R o+rX /opt/homebrew/Cellar/zsh
 
   echo ""
   echo "Machine setup complete!"
@@ -145,7 +146,7 @@ echo ""
 echo "Running user setup as $TARGET_USER..."
 sudo -u "$TARGET_USER" -i bash -c "
   cd \$HOME/dotfiles 2>/dev/null || git clone https://github.com/lamson-dev/dotfiles.git \$HOME/dotfiles
-  cd \$HOME/dotfiles && bash scripts/setup-user.sh
+  cd \$HOME/dotfiles && git pull --ff-only && bash scripts/setup-user.sh
 "
 
 echo ""
