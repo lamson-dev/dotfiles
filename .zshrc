@@ -1,9 +1,14 @@
-# OPENSPEC:START
-# OpenSpec shell completions configuration
+# Ensure Homebrew zsh functions are in fpath (Apple Silicon)
+if [ -d /opt/homebrew/share/zsh/site-functions ]; then
+  fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+fi
+if [ -d /opt/homebrew/share/zsh/functions ]; then
+  fpath=(/opt/homebrew/share/zsh/functions $fpath)
+fi
+
 fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
 autoload -Uz compinit
 compinit -u
-# OPENSPEC:END
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
