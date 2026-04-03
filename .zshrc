@@ -7,6 +7,9 @@ fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+# Skip compinit security check — Homebrew dirs are owned by admin user,
+# not the current user, which compinit -i silently skips.
+ZSH_DISABLE_COMPFIX=true
 
 plugins=(
     git
