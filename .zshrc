@@ -1,14 +1,9 @@
 # Ensure Homebrew zsh functions are in fpath (Apple Silicon)
-if [ -d /opt/homebrew/share/zsh/site-functions ]; then
-  fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
-fi
 if [ -d /opt/homebrew/share/zsh/functions ]; then
-  fpath=(/opt/homebrew/share/zsh/functions $fpath)
+  fpath=(/opt/homebrew/share/zsh/functions /opt/homebrew/share/zsh/site-functions $fpath)
 fi
 
 fpath=("$HOME/.oh-my-zsh/custom/completions" $fpath)
-autoload -Uz compinit
-compinit -u
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -20,6 +15,12 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+# Re-add Homebrew zsh functions after Oh My Zsh (it resets fpath)
+if [ -d /opt/homebrew/share/zsh/functions ]; then
+  fpath=(/opt/homebrew/share/zsh/functions /opt/homebrew/share/zsh/site-functions $fpath)
+  autoload -Uz add-zsh-hook bashcompinit
+fi
 
 alias zel="zellij"
 alias gemi="gemini"
