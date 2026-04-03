@@ -156,6 +156,18 @@ else
 fi
 
 ###############################################################################
+# Claude Code
+###############################################################################
+echo ""
+echo "==> Claude Code"
+if ! command -v claude &>/dev/null; then
+  echo "Installing Claude Code..."
+  curl -fsSL https://claude.ai/install.sh | bash
+else
+  echo "Claude Code: already installed ($(claude --version 2>/dev/null || echo 'unknown'))"
+fi
+
+###############################################################################
 # File associations — Cursor as default for code files
 ###############################################################################
 echo ""
