@@ -22,6 +22,7 @@ brew install \
   git-delta \
   nvm \
   starship \
+  pulumi \
   tree \
   vim \
   zellij \
@@ -98,6 +99,14 @@ else
     echo "Installing latest LTS Node..."
     nvm install --lts
   fi
+fi
+
+###############################################################################
+# Bun
+###############################################################################
+if ! command -v bun &>/dev/null; then
+  echo "Installing Bun..."
+  curl -fsSL https://bun.sh/install | bash
 fi
 
 ###############################################################################

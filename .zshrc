@@ -42,3 +42,11 @@ export NVM_DIR="$HOME/.nvm"
 NVM_BREW="/opt/homebrew/opt/nvm"
 [ -s "$NVM_BREW/nvm.sh" ] && \. "$NVM_BREW/nvm.sh"
 [ -s "$NVM_BREW/etc/bash_completion.d/nvm" ] && \. "$NVM_BREW/etc/bash_completion.d/nvm"
+
+# Bun
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Pulumi
+export PATH="$HOME/.pulumi/bin:$PATH"
