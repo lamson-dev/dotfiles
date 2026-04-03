@@ -56,7 +56,7 @@ Git identity is auto-detected per user via `includeIf` in `.gitconfig`. Each use
 ```
 .gitconfig.user.dalab-tech   → Son Nguyen <lamson-dev@users.noreply.github.com>
 .gitconfig.user.dalab-yolo   → Dang Nguyen <nsdang@users.noreply.github.com>
-.gitconfig.user.dalab-anton  → Anton <anton-dalab@users.noreply.github.com>
+.gitconfig.user.anton        → Anton <anton-dalab@users.noreply.github.com>
 .gitconfig.user.lamson-dev   → Son Nguyen <lamson-dev@users.noreply.github.com>
 ```
 

@@ -5,8 +5,8 @@
 	path = ~/dotfiles/.gitconfig.user.dalab-tech
 [includeIf "gitdir:/Users/lamson-dev/"]
 	path = ~/dotfiles/.gitconfig.user.lamson-dev
-[includeIf "gitdir:/Users/dalab-anton/"]
-	path = ~/dotfiles/.gitconfig.user.dalab-anton
+[includeIf "gitdir:/Users/anton/"]
+	path = ~/dotfiles/.gitconfig.user.anton
 
 [pull]
     rebase = true
