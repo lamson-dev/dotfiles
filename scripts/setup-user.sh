@@ -193,6 +193,23 @@ else
   echo "Claude Code: already installed ($(claude --version 2>/dev/null || echo 'unknown'))"
 fi
 
+# Status bar scripts
+mkdir -p "$HOME/.claude"
+cp "$DOTFILES/claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+cp "$DOTFILES/claude/fetch-usage.sh" "$HOME/.claude/fetch-usage.sh"
+chmod +x "$HOME/.claude/statusline-command.sh" "$HOME/.claude/fetch-usage.sh"
+
+# Merge statusLine and hooks into existing settings.json (preserves other keys)
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+CLAUDE_PATCH="$DOTFILES/claude/settings.json"
+if [ -f "$CLAUDE_SETTINGS" ]; then
+  jq -s '.[0] * .[1]' "$CLAUDE_SETTINGS" "$CLAUDE_PATCH" > "${CLAUDE_SETTINGS}.tmp" \
+    && mv "${CLAUDE_SETTINGS}.tmp" "$CLAUDE_SETTINGS"
+else
+  cp "$CLAUDE_PATCH" "$CLAUDE_SETTINGS"
+fi
+echo "Claude Code status bar configured."
+
 ###############################################################################
 # File associations — Cursor as default for code files
 ###############################################################################

@@ -20,6 +20,9 @@ All configs live in `~/dotfiles/` and are symlinked to their expected locations.
 | `.zshrc` | `~/.zshrc` |
 | `.zprofile` | `~/.zprofile` |
 | `.npmrc` | `~/.npmrc` |
+| `claude/statusline-command.sh` | `~/.claude/statusline-command.sh` (copied) |
+| `claude/fetch-usage.sh` | `~/.claude/fetch-usage.sh` (copied) |
+| `claude/settings.json` | `~/.claude/settings.json` (merged) |
 
 ## File Associations
 
