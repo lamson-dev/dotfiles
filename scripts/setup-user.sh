@@ -174,11 +174,11 @@ fi
 ###############################################################################
 echo ""
 echo "==> Cursor CLI"
-if ! command -v cursor &>/dev/null; then
+if ! command -v agent &>/dev/null; then
   echo "Installing Cursor CLI..."
   curl -fsSL https://cursor.com/install | bash
 else
-  echo "Cursor CLI: already installed"
+  echo "Cursor CLI: already installed ($(agent --version 2>/dev/null || echo 'unknown'))"
 fi
 
 ###############################################################################
