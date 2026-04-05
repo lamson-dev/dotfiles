@@ -95,18 +95,23 @@ if [ "$ADD_USER_ONLY" = false ]; then
     sleep 3
   fi
 
-  brew install --cask \
-    1password \
-    cursor \
-    dropbox \
-    firefox \
-    ghostty \
-    google-chrome \
-    nikitabobko/tap/aerospace \
-    slack \
-    spotify \
-    tailscale \
+  CASK_APPS=(
+    1password
+    cursor
+    dropbox
+    firefox
+    ghostty
+    google-chrome
+    nikitabobko/tap/aerospace
+    slack
+    spotify
+    tailscale
     zoom
+  )
+  brew install --cask "${CASK_APPS[@]}"
+
+  echo "Upgrading apps..."
+  brew upgrade --cask "${CASK_APPS[@]}"
 
   # Restart Tailscale if it was running before
   if [ "$TAILSCALE_WAS_RUNNING" = true ]; then
