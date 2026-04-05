@@ -66,6 +66,7 @@ if [ "$ADD_USER_ONLY" = false ]; then
   echo "Installing CLI tools..."
   brew install \
     bat \
+    codex \
     duti \
     gh \
     git \

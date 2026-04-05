@@ -170,6 +170,18 @@ else
 fi
 
 ###############################################################################
+# Cursor CLI
+###############################################################################
+echo ""
+echo "==> Cursor CLI"
+if ! command -v cursor &>/dev/null; then
+  echo "Installing Cursor CLI..."
+  curl -fsSL https://cursor.com/install | bash
+else
+  echo "Cursor CLI: already installed"
+fi
+
+###############################################################################
 # Claude Code
 ###############################################################################
 echo ""
