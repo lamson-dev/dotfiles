@@ -62,6 +62,10 @@ if [ "$ADD_USER_ONLY" = false ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null || true
   echo "Homebrew: OK"
 
+  # Refresh Homebrew index so installs/upgrades use latest versions
+  echo "Updating Homebrew..."
+  brew update
+
   # CLI tools
   echo "Installing CLI tools..."
   brew install \
