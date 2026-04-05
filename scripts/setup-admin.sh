@@ -82,6 +82,19 @@ if [ "$ADD_USER_ONLY" = false ]; then
 
   # Cask apps
   echo "Installing apps..."
+
+  # Stop Tailscale before install/upgrade — its installer fails while the daemon is running
+  TAILSCALE_WAS_RUNNING=false
+  if pgrep -q "[Tt]ailscale" 2>/dev/null; then
+    TAILSCALE_WAS_RUNNING=true
+    echo "Stopping Tailscale for upgrade..."
+    osascript -e 'quit app "Tailscale"' 2>/dev/null || true
+    sudo killall tailscaled 2>/dev/null || true
+    sudo killall Tailscale 2>/dev/null || true
+    sudo killall "Tailscale IPNExtension" 2>/dev/null || true
+    sleep 3
+  fi
+
   brew install --cask \
     1password \
     cursor \
@@ -94,6 +107,12 @@ if [ "$ADD_USER_ONLY" = false ]; then
     spotify \
     tailscale \
     zoom
+
+  # Restart Tailscale if it was running before
+  if [ "$TAILSCALE_WAS_RUNNING" = true ]; then
+    echo "Restarting Tailscale..."
+    open -a Tailscale
+  fi
 
   # Fonts
   echo "Installing fonts..."
