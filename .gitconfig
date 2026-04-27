@@ -7,6 +7,8 @@
 	path = ~/dotfiles/.gitconfig.user.lamson-dev
 [includeIf "gitdir:/Users/anton/"]
 	path = ~/dotfiles/.gitconfig.user.anton
+[includeIf "gitdir:/Users/son/"]
+	path = ~/dotfiles/.gitconfig.user.son
 
 [pull]
     rebase = true
