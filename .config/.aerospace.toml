@@ -122,8 +122,8 @@ automatically-unhide-macos-hidden-apps = false
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
     alt-1 = 'workspace 1'
-    alt-2 = 'workspace 2'
-    alt-3 = 'workspace 3'
+    alt-2 = ['workspace 2', 'workspace 4', 'workspace 2']
+    alt-3 = ['workspace 3', 'workspace 5', 'workspace 3']
     alt-4 = 'workspace 4' # Built-in Retina Display
     alt-5 = 'workspace 5' # External Display @ Work
     # alt-6 = 'workspace 6'
@@ -230,7 +230,7 @@ automatically-unhide-macos-hidden-apps = false
 
 [[on-window-detected]]
 if.app-id = 'com.mitchellh.ghostty'
-run = ['move-node-to-workspace 2']
+run = ['move-node-to-workspace T']
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
@@ -258,12 +258,12 @@ run = 'move-node-to-workspace N'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.iCal'
-run = 'move-node-to-workspace 4'
+run = 'move-node-to-workspace M'
 
 # Cursor
-[[on-window-detected]]
-if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace 3'
+#[[on-window-detected]]
+#if.app-id = 'com.todesktop.230313mzl4w4u92'
+#run = 'move-node-to-workspace 3'
 
 # Antigravity
 [[on-window-detected]]
