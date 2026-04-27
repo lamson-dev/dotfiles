@@ -28,6 +28,7 @@ fi
 alias zel="zellij"
 alias gemi="gemini"
 alias pu="pulumi"
+alias fs="falc sync"
 
 eval "$(starship init zsh)"
 
@@ -50,3 +51,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Pulumi
 export PATH="$HOME/.pulumi/bin:$PATH"
+
+# JAVA_HOME: Java Home
+export JAVA_HOME=$(/usr/libexec/java_home)
