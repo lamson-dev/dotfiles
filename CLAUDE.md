@@ -26,7 +26,20 @@ All configs live in `~/dotfiles/` and are symlinked to their expected locations.
 
 ## File Associations
 
-`duti/config` maps code file extensions to Cursor (`com.todesktop.230313mzl4w4u92`). Applied automatically by `setup-user.sh`. To re-apply manually: `duti ~/dotfiles/duti/config`. Swift/Xcode project files intentionally excluded.
+Code extensions map to Cursor (`com.todesktop.230313mzl4w4u92`) via two mechanisms applied by `setup-user.sh`:
+
+- `duti/config` — extensions with **static UTIs** that LaunchServices accepts (e.g. `.js`, `.html`, `.py`). Applied with `duti ~/dotfiles/duti/config`.
+- `duti/extensions-by-tag` — extensions that resolve to **dynamic UTIs** (e.g. `.tsx`, `.toml`, `.scss`, `.fish`). duti can't bind these (`error -50` for `dyn.*` UTIs), so `scripts/bind-extensions.sh` writes `LSHandlerContentTag` entries via `defaults import`, verifies each via `NSWorkspace.urlForApplication(toOpen:)`, and **removes any that didn't actually take effect** — leaving them in place would trigger a Finder "use Cursor or keep <other app>" dialog on every login.
+
+Swift/Xcode project files intentionally excluded — they stay with Xcode.
+
+### Antigravity / multi-editor caveat
+
+If another editor (e.g. Antigravity) declares `LSHandlerRank = Owner` for a code extension in its `Info.plist`, **macOS doesn't allow programmatic override** — `LSSetDefaultRoleHandlerForContentType` returns success but the change doesn't stick. `bind-extensions.sh` reports the affected extensions and a one-time manual fix is required:
+
+> Finder → right-click a file with that extension → **Get Info** → **Open with: Cursor** → **Change All…**
+
+After that, the choice persists. Uninstalling Antigravity (or any editor not in active use) is the cleanest way to avoid these conflicts.
 
 ## Adding New Configs
 

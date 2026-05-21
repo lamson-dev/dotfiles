@@ -222,6 +222,10 @@ else
   echo "duti not found — skipping file associations"
 fi
 
+# Bind extensions that have no static UTI (duti can't handle these — see
+# duti/extensions-by-tag and scripts/bind-extensions.sh).
+bash "$DOTFILES/scripts/bind-extensions.sh"
+
 ###############################################################################
 # macOS user preferences
 ###############################################################################

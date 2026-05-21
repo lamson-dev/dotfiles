@@ -1,0 +1,18 @@
+# Extensions without static UTIs — bound to Cursor via LSHandlerContentTag.
+# Applied by scripts/bind-extensions.sh (LaunchServices won't accept the
+# dynamic UTIs duti resolves these to). One extension per line, no leading dot.
+tsx
+jsx
+mjs
+cjs
+scss
+sass
+less
+toml
+env
+mdx
+fish
+rs
+go
+cs
+zsh
