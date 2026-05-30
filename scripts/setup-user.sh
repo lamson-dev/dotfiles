@@ -170,8 +170,24 @@ else
 fi
 
 ###############################################################################
-# Cursor CLI
+# Antigravity CLI (primary) + Cursor CLI (fallback)
 ###############################################################################
+echo ""
+echo "==> Antigravity CLI"
+# The older `antigravity` cask used to drop a broken shim at /opt/homebrew/bin/agy
+# pointing into the GUI app. The split `antigravity-cli` cask owns the binary now.
+# Wipe a stale shim so brew can install cleanly.
+if ! agy --version &>/dev/null && [ -e /opt/homebrew/bin/agy ] \
+   && ! brew list --cask antigravity-cli &>/dev/null; then
+  rm -f /opt/homebrew/bin/agy
+fi
+if ! agy --version &>/dev/null; then
+  echo "Installing Antigravity CLI..."
+  brew install --cask antigravity-cli
+else
+  echo "Antigravity CLI: already installed ($(agy --version 2>/dev/null || echo 'unknown'))"
+fi
+
 echo ""
 echo "==> Cursor CLI"
 if ! command -v agent &>/dev/null; then
@@ -211,20 +227,48 @@ fi
 echo "Claude Code status bar configured."
 
 ###############################################################################
-# File associations — Cursor as default for code files
+# File associations — Antigravity preferred, Cursor as fallback
 ###############################################################################
 echo ""
 echo "==> File associations"
-if command -v duti &>/dev/null; then
-  duti "$DOTFILES/duti/config"
-  echo "Cursor set as default for code files."
-else
-  echo "duti not found — skipping file associations"
-fi
 
-# Bind extensions that have no static UTI (duti can't handle these — see
-# duti/extensions-by-tag and scripts/bind-extensions.sh).
-bash "$DOTFILES/scripts/bind-extensions.sh"
+# Pick the editor that's actually installed. Antigravity wins because it
+# declares LSHandlerRank = Owner for the dyn-UTI code extensions, so picking
+# Cursor would force a one-time Finder "Change All" per extension.
+EDITOR_APP=""
+EDITOR_BUNDLE=""
+EDITOR_NAME=""
+for candidate in \
+  "/Applications/Antigravity.app:Antigravity" \
+  "/Applications/Cursor.app:Cursor"; do
+  app="${candidate%%:*}"
+  name="${candidate##*:}"
+  if [ -d "$app" ]; then
+    EDITOR_APP="$app"
+    EDITOR_NAME="$name"
+    EDITOR_BUNDLE="$(mdls -name kMDItemCFBundleIdentifier -r "$app" 2>/dev/null)"
+    break
+  fi
+done
+
+if [ -z "$EDITOR_BUNDLE" ]; then
+  echo "Neither Antigravity nor Cursor installed — skipping file associations"
+elif ! command -v duti &>/dev/null; then
+  echo "duti not found — skipping file associations"
+else
+  echo "Binding code extensions to $EDITOR_NAME ($EDITOR_BUNDLE)..."
+  # duti needs a real file path (it rejects /dev/fd/* with "not a supported
+  # settings path"), so substitute the template into a temp file.
+  DUTI_TMP="$(mktemp -t duti.XXXXXX)"
+  trap 'rm -f "$DUTI_TMP"' EXIT
+  sed "s/__EDITOR_BUNDLE_ID__/$EDITOR_BUNDLE/g" "$DOTFILES/duti/config" > "$DUTI_TMP"
+  duti "$DUTI_TMP"
+  echo "$EDITOR_NAME set as default for code files."
+
+  # Bind extensions that have no static UTI (duti can't handle these — see
+  # duti/extensions-by-tag and scripts/bind-extensions.sh).
+  EDITOR_BUNDLE_ID="$EDITOR_BUNDLE" bash "$DOTFILES/scripts/bind-extensions.sh"
+fi
 
 ###############################################################################
 # macOS user preferences

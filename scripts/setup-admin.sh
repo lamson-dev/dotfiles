@@ -101,6 +101,8 @@ if [ "$ADD_USER_ONLY" = false ]; then
 
   CASK_APPS=(
     1password
+    antigravity
+    antigravity-cli
     cursor
     dropbox
     firefox
