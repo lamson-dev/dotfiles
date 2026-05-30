@@ -198,6 +198,18 @@ else
 fi
 
 ###############################################################################
+# Composio CLI
+###############################################################################
+echo ""
+echo "==> Composio CLI"
+if ! command -v composio &>/dev/null; then
+  echo "Installing Composio CLI..."
+  curl -fsSL https://composio.dev/install | bash
+else
+  echo "Composio CLI: already installed ($(composio --version 2>/dev/null || echo 'unknown'))"
+fi
+
+###############################################################################
 # Claude Code
 ###############################################################################
 echo ""
