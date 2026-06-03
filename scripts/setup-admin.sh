@@ -76,6 +76,7 @@ if [ "$ADD_USER_ONLY" = false ]; then
     git \
     git-delta \
     nvm \
+    openjdk \
     pnpm \
     pulumi \
     starship \
@@ -83,6 +84,11 @@ if [ "$ADD_USER_ONLY" = false ]; then
     vim \
     zellij \
     zsh
+
+  # openjdk is keg-only; symlink it so /usr/libexec/java_home (and JAVA_HOME in
+  # .zshrc) can locate it.
+  sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk \
+    /Library/Java/JavaVirtualMachines/openjdk.jdk
 
   # Cask apps
   echo "Installing apps..."

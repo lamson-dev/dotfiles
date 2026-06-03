@@ -52,5 +52,5 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Pulumi
 export PATH="$HOME/.pulumi/bin:$PATH"
 
-# JAVA_HOME: Java Home
-export JAVA_HOME=$(/usr/libexec/java_home)
+# JAVA_HOME: Java Home (silent if no JDK is installed)
+export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
