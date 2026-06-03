@@ -12,10 +12,9 @@
 # JavaScript / TypeScript
 __EDITOR_BUNDLE_ID__  .js    all
 
-# Web — .html/.htm use `editor` role so the browser default (Chrome) is left
-# alone; `all` would prompt the user to switch their default web browser.
-__EDITOR_BUNDLE_ID__  .html  editor
-__EDITOR_BUNDLE_ID__  .htm   editor
+# Web — .html/.htm are intentionally NOT bound here. Setting ANY handler for
+# public.html (even the `editor` role) makes macOS pop the "change your default
+# web browser?" dialog on every run, so we leave html to Chrome entirely.
 __EDITOR_BUNDLE_ID__  .css   all
 
 # Data / Config

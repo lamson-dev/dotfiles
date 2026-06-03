@@ -28,7 +28,7 @@ All configs live in `~/dotfiles/` and are symlinked to their expected locations.
 
 `setup-user.sh` picks the preferred editor at runtime (Antigravity first, Cursor as fallback) and routes both mechanisms below to that bundle ID. The duti config uses `__EDITOR_BUNDLE_ID__` as a placeholder that's substituted before duti runs.
 
-- `duti/config` — extensions with **static UTIs** that LaunchServices accepts (e.g. `.js`, `.html`, `.py`). `.html`/`.htm` use role `editor` so the browser default (Chrome) is left alone.
+- `duti/config` — extensions with **static UTIs** that LaunchServices accepts (e.g. `.js`, `.py`). `.html`/`.htm` are intentionally **not** bound: setting any handler for `public.html` (even role `editor`) makes macOS pop the "change your default web browser?" dialog on every run, so html is left to Chrome entirely.
 - `duti/extensions-by-tag` — extensions that resolve to **dynamic UTIs** (e.g. `.tsx`, `.toml`, `.scss`, `.fish`). `scripts/bind-extensions.sh` strips stale `LSHandlers` entries pointing at other editors (usually leftovers from earlier "Use X" popup clicks), writes `LSHandlerContentTag` entries for the chosen editor, verifies each via `NSWorkspace.urlForApplication(toOpen:)`, and drops any that didn't take effect so Finder doesn't pop up a confirmation on every login.
 
 Swift/Xcode project files intentionally excluded — they stay with Xcode.
