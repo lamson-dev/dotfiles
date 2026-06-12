@@ -81,6 +81,14 @@ else
   else
     echo "Node: already installed ($(nvm current))"
   fi
+
+  # Global npm tools
+  if ! command -v firebase &>/dev/null; then
+    echo "Installing firebase-tools..."
+    npm install -g firebase-tools
+  else
+    echo "firebase-tools: already installed ($(firebase --version 2>/dev/null || echo 'unknown'))"
+  fi
 fi
 
 ###############################################################################
