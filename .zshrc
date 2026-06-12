@@ -54,3 +54,6 @@ export PATH="$HOME/.pulumi/bin:$PATH"
 
 # JAVA_HOME: Java Home (silent if no JDK is installed)
 export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
+
+# Hermes Agent — ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"

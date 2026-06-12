@@ -274,6 +274,17 @@ run = 'move-node-to-workspace A'
 if.app-id = 'com.anthropic.claudefordesktop'
 run = 'move-node-to-workspace I'
 
+# Hermes agent — running app reports com.nousresearch.hermes
+# (the on-disk Info.plist shows com.nousresearch.hermes.setup, which is the launcher stub)
+[[on-window-detected]]
+if.app-id = 'com.nousresearch.hermes'
+run = 'move-node-to-workspace H'
+
+# Codex
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = 'move-node-to-workspace C'
+
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = 'layout floating'
