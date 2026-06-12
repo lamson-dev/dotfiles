@@ -65,3 +65,5 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[safe]
+	directory = /Users/dalab-tech/actions-runner/_work/aftergrain/aftergrain
