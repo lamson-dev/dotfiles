@@ -276,9 +276,11 @@ run = 'move-node-to-workspace I'
 
 # Hermes agent — running app reports com.nousresearch.hermes
 # (the on-disk Info.plist shows com.nousresearch.hermes.setup, which is the launcher stub)
+# Routed to workspace O (not H): alt-h is bound to 'focus left', so Option+H can't
+# reach a workspace H. Option+O (alt-o below) switches here with no conflict.
 [[on-window-detected]]
 if.app-id = 'com.nousresearch.hermes'
-run = 'move-node-to-workspace H'
+run = 'move-node-to-workspace O'
 
 # Codex
 [[on-window-detected]]
