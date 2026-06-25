@@ -17,6 +17,8 @@ plugins=(
     zsh-autosuggestions
 )
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#928374"
+
 source $ZSH/oh-my-zsh.sh
 
 # Re-add Homebrew zsh functions after Oh My Zsh (it resets fpath)
