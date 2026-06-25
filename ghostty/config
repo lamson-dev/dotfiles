@@ -1,1 +1,23 @@
+font-family = 0xProto Nerd Font Mono
+font-size = 15
+minimum-contrast = 3
+theme = Gruvbox Material
+window-padding-x = 20
+window-padding-y = 20
 macos-option-as-alt = true
+
+keybind = ctrl+n=new_window
+
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
+
+keybind = ctrl+a>f=toggle_split_zoom
+
+keybind = ctrl+a>n=next_tab
+keybind = ctrl+a>p=previous_tab
+
+keybind = super+r=reload_config
+
+window-save-state = always
