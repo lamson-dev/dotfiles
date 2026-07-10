@@ -1,6 +1,6 @@
-# duti config — set the preferred editor as default for code files.
+# duti config — set Cursor as default for code files.
 # `__EDITOR_BUNDLE_ID__` is substituted by scripts/setup-user.sh with the
-# detected editor (Antigravity preferred, Cursor fallback). Format:
+# Cursor bundle ID. Format:
 #   <bundle-id>  <extension>  <role>
 #
 # Only list extensions here that resolve to STATIC UTIs on macOS. Extensions

@@ -178,24 +178,8 @@ else
 fi
 
 ###############################################################################
-# Antigravity CLI (primary) + Cursor CLI (fallback)
+# Cursor CLI
 ###############################################################################
-echo ""
-echo "==> Antigravity CLI"
-# The older `antigravity` cask used to drop a broken shim at /opt/homebrew/bin/agy
-# pointing into the GUI app. The split `antigravity-cli` cask owns the binary now.
-# Wipe a stale shim so brew can install cleanly.
-if ! agy --version &>/dev/null && [ -e /opt/homebrew/bin/agy ] \
-   && ! brew list --cask antigravity-cli &>/dev/null; then
-  rm -f /opt/homebrew/bin/agy
-fi
-if ! agy --version &>/dev/null; then
-  echo "Installing Antigravity CLI..."
-  brew install --cask antigravity-cli
-else
-  echo "Antigravity CLI: already installed ($(agy --version 2>/dev/null || echo 'unknown'))"
-fi
-
 echo ""
 echo "==> Cursor CLI"
 if ! command -v agent &>/dev/null; then
@@ -235,32 +219,20 @@ fi
 echo "Claude Code status bar configured."
 
 ###############################################################################
-# File associations — Antigravity preferred, Cursor as fallback
+# File associations — Cursor as default editor
 ###############################################################################
 echo ""
 echo "==> File associations"
 
-# Pick the editor that's actually installed. Antigravity wins because it
-# declares LSHandlerRank = Owner for the dyn-UTI code extensions, so picking
-# Cursor would force a one-time Finder "Change All" per extension.
-EDITOR_APP=""
+EDITOR_APP="/Applications/Cursor.app"
+EDITOR_NAME="Cursor"
 EDITOR_BUNDLE=""
-EDITOR_NAME=""
-for candidate in \
-  "/Applications/Antigravity.app:Antigravity" \
-  "/Applications/Cursor.app:Cursor"; do
-  app="${candidate%%:*}"
-  name="${candidate##*:}"
-  if [ -d "$app" ]; then
-    EDITOR_APP="$app"
-    EDITOR_NAME="$name"
-    EDITOR_BUNDLE="$(mdls -name kMDItemCFBundleIdentifier -r "$app" 2>/dev/null)"
-    break
-  fi
-done
+if [ -d "$EDITOR_APP" ]; then
+  EDITOR_BUNDLE="$(mdls -name kMDItemCFBundleIdentifier -r "$EDITOR_APP" 2>/dev/null)"
+fi
 
 if [ -z "$EDITOR_BUNDLE" ]; then
-  echo "Neither Antigravity nor Cursor installed — skipping file associations"
+  echo "Cursor not installed — skipping file associations"
 elif ! command -v duti &>/dev/null; then
   echo "duti not found — skipping file associations"
 else

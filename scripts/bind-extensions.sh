@@ -19,12 +19,9 @@ set -euo pipefail
 DOTFILES="${DOTFILES:-$HOME/dotfiles}"
 
 if [ -z "${EDITOR_BUNDLE_ID:-}" ]; then
-  for app in /Applications/Antigravity.app /Applications/Cursor.app; do
-    if [ -d "$app" ]; then
-      EDITOR_BUNDLE_ID="$(mdls -name kMDItemCFBundleIdentifier -r "$app" 2>/dev/null)"
-      break
-    fi
-  done
+  if [ -d /Applications/Cursor.app ]; then
+    EDITOR_BUNDLE_ID="$(mdls -name kMDItemCFBundleIdentifier -r /Applications/Cursor.app 2>/dev/null)"
+  fi
 fi
 if [ -z "${EDITOR_BUNDLE_ID:-}" ]; then
   echo "No editor app found — skipping"
@@ -42,7 +39,7 @@ fi
 EXTS=$(grep -v '^[[:space:]]*#' "$LIST" | tr -d ' \t' | grep -v '^$' | tr '\n' ' ')
 
 # Resolve each extension to its current UTI via Swift (modern API sees
-# UTIs registered by apps like Antigravity that duti's older lookup misses).
+# UTIs registered by apps that duti's older lookup misses).
 EXT_UTI_PAIRS=$(xcrun swift - $EXTS <<'SWIFT'
 import Foundation
 import UniformTypeIdentifiers
@@ -72,7 +69,7 @@ def is_uti_match(h, uti_set):
     return h.get("LSHandlerContentType") in uti_set
 
 # Drop any handler entry for our extensions/UTIs that doesn't already point at
-# our bundle (those are stale Cursor/Antigravity choices from prior popups).
+# our bundle (those are stale choices from another app's prior popups).
 def keep(h):
     if is_tag_match(h, exts) or is_uti_match(h, utis):
         return h.get("LSHandlerRoleAll") == bundle

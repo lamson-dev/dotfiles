@@ -261,13 +261,8 @@ if.app-id = 'com.apple.iCal'
 run = 'move-node-to-workspace M'
 
 # Cursor
-#[[on-window-detected]]
-#if.app-id = 'com.todesktop.230313mzl4w4u92'
-#run = 'move-node-to-workspace 3'
-
-# Antigravity
 [[on-window-detected]]
-if.app-id = 'com.google.antigravity'
+if.app-id = 'com.todesktop.230313mzl4w4u92'
 run = 'move-node-to-workspace A'
 
 [[on-window-detected]]
