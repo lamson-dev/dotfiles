@@ -58,4 +58,5 @@ GEMINI.md
 .env.production.local
 
 # Claude
-.claude/settings.local.json
+**/.claude/settings.local.json
+
